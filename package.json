@@ -1,0 +1,28 @@
+{
+  "name": "bf-interpreter",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A simple Brainf*ck interpreter",
+  "main": "index.js",
+  "imports": {
+    "#src/*": [
+      "./src/*"
+    ],
+    "#spec/*": [
+      "./spec/*"
+    ]
+  },
+  "scripts": {
+    "console": "node src/scripts/console.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chalarangelo/bf-interpreter.git"
+  },
+  "author": "Angelos Chalaris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Chalarangelo/bf-interpreter/issues"
+  },
+  "homepage": "https://github.com/Chalarangelo/bf-interpreter#readme"
+}
