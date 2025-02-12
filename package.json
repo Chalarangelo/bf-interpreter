@@ -7,13 +7,7 @@
   "imports": {
     "#src/*": [
       "./src/*"
-    ],
-    "#spec/*": [
-      "./spec/*"
     ]
-  },
-  "scripts": {
-    "console": "node src/scripts/console.js"
   },
   "repository": {
     "type": "git",
