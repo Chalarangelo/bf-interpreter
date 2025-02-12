@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+import { argv } from 'node:process';
+
+import Parser from '#src/parser.js';
+
+const [, , ...args] = argv;
+
+if (args.length === 0) throw new Error('No input provided');
+
+const [input] = args;
+
+const ast = Parser.parse(input);
+process.stdout.write(JSON.stringify(ast, null, 2));

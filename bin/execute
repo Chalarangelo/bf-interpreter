@@ -1,0 +1,78 @@
+#!/usr/bin/env node
+import { argv } from 'node:process';
+import { readFileSync } from 'node:fs';
+
+import Parser from '#src/parser.js';
+import Runner from '#src/runner.js';
+import AST from '#src/ast.js';
+
+const helpText = [
+  'Usage: execute [options] [ast_file]',
+  '',
+  'Options:',
+  '  -i, --input <input>     Input to the program',
+  '  -m, --memory <memory>   Initial memory state',
+  '  -d, --debug             Enable debug mode',
+  '  -c, --count <count>     Maximum number of instructions',
+  '  -p, --parse <input>     Parse raw Brainfuck code',
+  '  -b, --bf <b_file>       Parse Brainfuck code from file',
+].join('\n');
+
+const [, , ...args] = argv;
+
+if (args.length === 0) throw new Error('No input provided');
+
+const executionParams = {
+  stdin: process.stdin,
+  stdout: process.stdout,
+  memory: null,
+  maxInstructionCount: null,
+  debug: false,
+};
+
+let ast = null;
+
+const [...params] = args;
+
+params.forEach(param => {
+  if (!param.includes('=') && !param.startsWith('-')) {
+    const inputData = readFileSync(param, 'utf-8');
+    ast = AST.fromJSON(JSON.parse(inputData));
+    return;
+  }
+
+  const [key, value] = param.split('=');
+  switch (key) {
+    case '--input':
+    case '-i':
+      executionParams.input = value;
+      break;
+    case '--memory':
+    case '-m':
+      executionParams.memory = value;
+      break;
+    case '--debug':
+    case '-d':
+      executionParams.debug = true;
+    case '--count':
+    case '-c':
+      executionParams.maxInstructionCount = value;
+      break;
+    case '--parse':
+    case '-p':
+      ast = Parser.parse(value);
+      break;
+    case '--bf':
+    case '-b':
+      const inputData = readFileSync(value, 'utf-8');
+      ast = Parser.parse(inputData);
+      break;
+    case '--help':
+    case '-h':
+      process.stdout.write(helpText);
+      process.exit(0);
+  }
+});
+
+const runner = new Runner(ast, executionParams);
+runner.run();
