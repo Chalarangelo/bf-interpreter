@@ -30,15 +30,6 @@ class AST {
     return this.toString();
   }
 
-  toString_(options = {}) {
-    const { indentation = 0 } = options;
-    const indentationPrefix = ' '.repeat(indentation);
-
-    return this.nodes
-      .map(node => `${indentationPrefix}${node.toString({ indentation })}`)
-      .join('\n');
-  }
-
   static fromJSON(json) {
     const ast = new AST();
     json.nodes.forEach(node => ast.addNode(ASTNode.fromJSON(node)));
