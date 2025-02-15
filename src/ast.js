@@ -20,12 +20,6 @@ class AST {
     }
   }
 
-  static fromNodes(nodes) {
-    const ast = new AST();
-    ast.nodes = nodes;
-    return ast;
-  }
-
   [customInspectSymbol]() {
     return this.toString();
   }
