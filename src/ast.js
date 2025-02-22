@@ -2,7 +2,6 @@ import util from 'util';
 
 import ASTNode from './astNode.js';
 
-util.inspect.styles.record = 'blue';
 const customInspectSymbol = Symbol.for('nodejs.util.inspect.custom');
 
 class AST {
